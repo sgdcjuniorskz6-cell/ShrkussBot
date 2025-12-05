@@ -306,6 +306,7 @@
     <div class="modal-header">
       <h2 class="modal-title">Регистрация</h2>
       <button class="modal-close" id="closeModalBtn">✕</button>
+      
     </div>
 
     <form id="registrationForm" onsubmit="return false;">
@@ -341,6 +342,7 @@
 </div>
 
 <script>
+  // Инициализация объекта Web App
   const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
 
   // DOM элементы
@@ -355,7 +357,8 @@
   const email = document.getElementById('email');
   const phone = document.getElementById('phone');
 
-  // Валидация
+  // === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
+
   function isValidEmail(e) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
   }
@@ -412,12 +415,14 @@
     };
   }
 
-  // 🛑 ЛОГИКА ПРЕДЗАПОЛНЕНИЯ ПРИ ОТКРЫТИИ МОДАЛЬНОГО ОКНА 🛑
+  // === ОБРАБОТЧИКИ СОБЫТИЙ ===
+
+  // Открыть модаль и предзаполнить поля
   mainRegisterBtn.addEventListener('click', () => {
     mainPage.style.display = 'none';
     registrationModal.classList.add('show');
     
-    // Предзаполнение данными Telegram, если они доступны
+    // Логика предзаполнения данными Telegram
     if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
       const user = tg.initDataUnsafe.user;
       
@@ -425,24 +430,21 @@
       firstName.value = user.first_name || '';
       lastName.value = user.last_name || '';
 
-      // E-mail часто отсутствует, но заполняем, если есть
+      // E-mail, если доступен (зависит от настроек бота)
       if (user.email) {
         email.value = user.email;
       }
+    }
 
-      // Фокус на первом незаполненном поле (если имя/фамилия были заполнены)
-      if (firstName.value && lastName.value) {
-        if (!email.value) {
-          email.focus();
-        } else {
-          phone.focus();
-        }
-      } else {
-        firstName.focus();
-      }
-
-    } else {
+    // Фокусировка на первом незаполненном поле или на имени
+    if (!firstName.value) {
       firstName.focus();
+    } else if (!lastName.value) {
+      lastName.focus();
+    } else if (!email.value) {
+      email.focus();
+    } else {
+      phone.focus();
     }
     
     if (tg) {
@@ -450,17 +452,17 @@
     }
   });
 
-  // Закрыть модаль (Сброс полей)
+  // Закрыть модаль (очищаем только ошибки, email и phone, чтобы сохранить имя/фамилию)
   closeModalBtn.addEventListener('click', () => {
     registrationModal.classList.remove('show');
     mainPage.style.display = 'flex';
     
-    // Очистка формы
+    // Очистка ошибок и полей, которые не заполняются из Telegram
     clearErrors();
-    firstName.value = '';
-    lastName.value = '';
     email.value = '';
     phone.value = '';
+
+    // ! НЕ ОЧИЩАЕМ firstName и lastName, чтобы сохранить данные Telegram
 
     if (tg) {
       tg.MainButton.hide();
@@ -481,15 +483,10 @@
     }
   });
 
-  // Инициализация Telegram
+  // Инициализация Telegram Web App
   if (tg) {
     try { tg.expand(); } catch (e) {}
   }
-
-  // Стартовый фокус на основной странице
-  // Если вы хотите, чтобы страница начиналась не с поля, 
-  // этот вызов должен быть в конце:
-  // firstName.focus(); 
 </script>
 </body>
 </html>
