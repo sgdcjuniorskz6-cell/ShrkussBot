@@ -306,7 +306,6 @@
     <div class="modal-header">
       <h2 class="modal-title">Регистрация</h2>
       <button class="modal-close" id="closeModalBtn">✕</button>
-      
     </div>
 
     <form id="registrationForm" onsubmit="return false;">
@@ -364,7 +363,6 @@
   }
 
   function isValidPhone(p) {
-    // Улучшенная регулярка для телефона
     return /\+?\d{7,15}/.test(p.replace(/\s|[-()]/g, "").replace(/^8/, '+7')); 
   }
 
@@ -430,13 +428,13 @@
       firstName.value = user.first_name || '';
       lastName.value = user.last_name || '';
 
-      // E-mail, если доступен (зависит от настроек бота)
+      // E-mail, если доступен
       if (user.email) {
         email.value = user.email;
       }
     }
 
-    // Фокусировка на первом незаполненном поле или на имени
+    // Фокусировка на первом незаполненном поле
     if (!firstName.value) {
       firstName.focus();
     } else if (!lastName.value) {
@@ -452,17 +450,17 @@
     }
   });
 
-  // Закрыть модаль (очищаем только ошибки, email и phone, чтобы сохранить имя/фамилию)
+  // Закрыть модаль (полная очистка, чтобы избежать сохранения чужих данных)
   closeModalBtn.addEventListener('click', () => {
     registrationModal.classList.remove('show');
     mainPage.style.display = 'flex';
     
-    // Очистка ошибок и полей, которые не заполняются из Telegram
+    // Полная очистка формы и ошибок
     clearErrors();
+    firstName.value = '';
+    lastName.value = '';
     email.value = '';
     phone.value = '';
-
-    // ! НЕ ОЧИЩАЕМ firstName и lastName, чтобы сохранить данные Telegram
 
     if (tg) {
       tg.MainButton.hide();
