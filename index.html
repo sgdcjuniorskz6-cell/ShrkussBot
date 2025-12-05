@@ -71,11 +71,11 @@
     padding: 16px;
     box-shadow: 0 1px 0 rgba(23,26,28,0.03), 0 8px 20px rgba(9,12,14,0.04);
     text-align: center;
-    transition: transform 0.2s; /* Анимация */
+    transition: transform 0.2s;
   }
   
   .course-card:hover {
-    transform: translateY(-2px); /* Анимация */
+    transform: translateY(-2px);
   }
 
   .course-icon {
@@ -113,7 +113,7 @@
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 2px 0 rgba(0,0,0,0.04);
-    transition: opacity 0.2s; /* Анимация */
+    transition: opacity 0.2s;
   }
 
   .btn-register:active {
@@ -132,7 +132,7 @@
     z-index: 1000;
     flex-direction: column;
     justify-content: flex-end;
-    opacity: 0; /* Начальное состояние для анимации */
+    opacity: 0;
     transition: opacity 0.3s ease-in-out; 
   }
 
@@ -320,6 +320,7 @@
     <div class="modal-header">
       <h2 class="modal-title">Регистрация</h2>
       <button class="modal-close" id="closeModalBtn">✕</button>
+      
     </div>
 
     <form id="registrationForm" onsubmit="return false;">
@@ -355,6 +356,7 @@
 </div>
 
 <script>
+  // @ts-nocheck
   // Инициализация объекта Web App. Если не в Telegram, tg будет null.
   const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
 
@@ -442,12 +444,12 @@
     mainPage.style.display = 'none';
     registrationModal.classList.add('show');
     
-    // ✅ ЛОГИКА АВТОМАТИЧЕСКОГО ЗАПОЛНЕНИЯ (если запущен в Telegram)
+    // ✅ ЛОГИКА АВТОМАТИЧЕСКОГО ЗАПОЛНЕНИЯ 
     if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
       const user = tg.initDataUnsafe.user;
       
-      firstName.value = user.first_name || ''; // Заполняем Имя
-      lastName.value = user.last_name || ''; // Заполняем Фамилию
+      firstName.value = user.first_name || ''; 
+      lastName.value = user.last_name || ''; 
       
       if (user.email) { email.value = user.email; }
     }
@@ -471,7 +473,6 @@
     registrationModal.classList.remove('show');
     mainPage.style.display = 'flex';
     
-    // Очистка формы
     clearErrors();
     firstName.value = '';
     lastName.value = '';
@@ -488,11 +489,11 @@
     const payload = gatherData();
 
     if (tg) {
-      // ✅ РАБОТАЕТ В ТЕЛЕГРАМ: отправляем JSON вашему Python-боту
+      // Отправляем JSON вашему Python-боту
       tg.sendData(JSON.stringify(payload));
       try { tg.close(); } catch(e) {}
     } else {
-      // ❌ РАБОТАЕТ В БРАУЗЕРЕ: показываем alert (режим отладки)
+      // Режим отладки в браузере
       console.log("Данные для отправки:", payload);
       alert("Режим отладки. Данные собраны, но не отправлены в ТГ-бот.");
       closeModalBtn.click(); 
