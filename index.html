@@ -5,460 +5,67 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Juniors.kz — Community</title>
 <style>
-  :root {
-    --tg-blue: #2A9DF4;
-    --bg: #f7f9fb;
-    --card: #ffffff;
-    --muted: #7b8a99;
-    --input-border: #e6eef3;
-    --radius: 12px;
-  }
-  
-  html, body {
-    height: 100%;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: var(--bg);
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  :root {
+    --tg-blue: #2A9DF4;
+    --bg: #f7f9fb;
+    --card: #ffffff;
+    --muted: #7b8a99;
+    --input-border: #e6eef3;
+    --radius: 12px;
+  }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: var(--bg);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 
-  .container {
-    max-width: 520px;
-    margin: 20px auto;
-    padding: 16px;
-  }
+  .container {
+    max-width: 520px;
+    margin: 20px auto;
+    padding: 16px;
+  }
 
-  /* === ГЛАВНАЯ СТРАНИЦА === */
-  #mainPage {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
+  /* === ГЛАВНАЯ СТРАНИЦА === */
+  #mainPage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
 
-  .header {
-    text-align: center;
-    padding: 40px 16px 20px;
-  }
+  .header {
+    text-align: center;
+    padding: 40px 16px 20px;
+  }
 
-  .logo {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--tg-blue);
-    margin: 0 0 10px 0;
-  }
+  .logo {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--tg-blue);
+    margin: 0 0 10px 0;
+  }
 
-  .tagline {
-    font-size: 14px;
-    color: var(--muted);
-    margin: 0 0 30px 0;
-  }
+  .tagline {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 30px 0;
+  }
 
-  .courses-grid {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 16px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
+  .courses-grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
 
-  .course-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 16px;
-    box-shadow: 0 1px 0 rgba(23,26,28,0.03), 0 8px 20px rgba(9,12,14,0.04);
-    text-align: center;
-  }
-
-  .course-icon {
-    font-size: 32px;
-    margin-bottom: 10px;
-  }
-
-  .course-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: #13171a;
-    margin: 0;
-  }
-
-  .course-desc {
-    font-size: 12px;
-    color: var(--muted);
-    margin: 6px 0 0 0;
-  }
-
-  .footer-action {
-    padding: 16px;
-    background: var(--card);
-    border-top: 1px solid var(--input-border);
-  }
-
-  .btn-register {
-    width: 100%;
-    padding: 14px;
-    font-size: 15px;
-    border-radius: 12px;
-    border: none;
-    background: var(--tg-blue);
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 2px 0 rgba(0,0,0,0.04);
-  }
-
-  .btn-register:active {
-    opacity: 0.85;
-  }
-
-  /* === МОДАЛЬ РЕГИСТРАЦИЯ === */
-  #registrationModal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  #registrationModal.show {
-    display: flex;
-  }
-
-  .modal-content {
-    background: var(--card);
-    border-radius: 16px 16px 0 0;
-    padding: 20px 16px 32px;
-    max-height: 90vh;
-    overflow-y: auto;
-    animation: slideUp 0.3s ease-out;
-  }
-
-  @keyframes slideUp {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .modal-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #13171a;
-    margin: 0;
-  }
-
-  .modal-close {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--muted);
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .form-group {
-    margin-bottom: 16px;
-  }
-
-  label {
-    display: block;
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 6px;
-    font-weight: 500;
-  }
-
-  .input {
-    box-sizing: border-box;
-    width: 100%;
-    height: 44px;
-    padding: 8px 12px;
-    border: 1px solid var(--input-border);
-    border-radius: 10px;
-    background: #fff;
-    font-size: 15px;
-    color: #13171a;
-  }
-
-  .input::placeholder {
-    color: #aab7c3;
-  }
-
-  .hint {
-    font-size: 12px;
-    color: #97a5b3;
-    margin-top: 6px;
-  }
-
-  .error-msg {
-    font-size: 12px;
-    color: #d74242;
-    margin-top: 4px;
-    display: none;
-  }
-
-  .error-msg.show {
-    display: block;
-  }
-
-  .btn-submit {
-    width: 100%;
-    padding: 12px 14px;
-    font-size: 15px;
-    border-radius: 12px;
-    border: none;
-    background: var(--tg-blue);
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 20px;
-    box-shadow: 0 2px 0 rgba(0,0,0,0.04);
-  }
-
-  .btn-submit:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  .privacy-text {
-    font-size: 11px;
-    color: #97a5b3;
-    margin-top: 12px;
-    text-align: center;
-  }
-
-  @media (max-width: 420px) {
-    .container { padding: 8px; }
-    .courses-grid { gap: 10px; }
-    .header { padding: 30px 16px 15px; }
-  }
-</style>
-</head>
-<body>
-
-<!-- ГЛАВНАЯ СТРАНИЦА -->
-<div id="mainPage">
-  <div class="header">
-    <h1 class="logo">Juniors.kz</h1>
-    <p class="tagline">Community для студентов IT-направлений</p>
-  </div>
-
-  <div class="courses-grid">
-    <div class="course-card">
-      <div class="course-icon">💻</div>
-      <h3 class="course-name">Web Development</h3>
-      <p class="course-desc">Frontend & Backend</p>
-    </div>
-    <div class="course-card">
-      <div class="course-icon">📱</div>
-      <h3 class="course-name">Mobile Apps</h3>
-      <p class="course-desc">iOS & Android</p>
-    </div>
-    <div class="course-card">
-      <div class="course-icon">🤖</div>
-      <h3 class="course-name">AI & ML</h3>
-      <p class="course-desc">Machine Learning</p>
-    </div>
-    <div class="course-card">
-      <div class="course-icon">🎮</div>
-      <h3 class="course-name">Game Dev</h3>
-      <p class="course-desc">Unity & Unreal</p>
-    </div>
-    <div class="course-card">
-      <div class="course-icon">☁️</div>
-      <h3 class="course-name">Cloud & DevOps</h3>
-      <p class="course-desc">AWS, Docker</p>
-    </div>
-    <div class="course-card">
-      <div class="course-icon">🔒</div>
-      <h3 class="course-name">Cybersecurity</h3>
-      <p class="course-desc">Безопасность</p>
-    </div>
-  </div>
-
-  <div class="footer-action">
-    <button id="mainRegisterBtn" class="btn-register">Присоединиться</button>
-  </div>
-</div>
-
-<!-- МОДАЛЬ РЕГИСТРАЦИИ -->
-<div id="registrationModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 class="modal-title">Регистрация</h2>
-      <button class="modal-close" id="closeModalBtn">✕</button>
-    </div>
-
-    <form id="registrationForm" onsubmit="return false;">
-      <div class="form-group">
-        <label for="firstName">Имя *</label>
-        <input id="firstName" class="input" type="text" name="firstName" placeholder="Ваше имя" required>
-        <div class="error-msg" id="errorFirstName"></div>
-      </div>
-
-      <div class="form-group">
-        <label for="lastName">Фамилия *</label>
-        <input id="lastName" class="input" type="text" name="lastName" placeholder="Ваша фамилия" required>
-        <div class="error-msg" id="errorLastName"></div>
-      </div>
-
-      <div class="form-group">
-        <label for="email">E‑mail *</label>
-        <input id="email" class="input" type="email" name="email" placeholder="example@mail.com" required>
-        <div class="error-msg" id="errorEmail"></div>
-      </div>
-
-      <div class="form-group">
-        <label for="phone">Телефон *</label>
-        <input id="phone" class="input" type="tel" name="phone" placeholder="+7 (777) 123-45-67" inputmode="tel" required>
-        <div class="hint">Формат: +7 (ХХХ) ХХХ-ХХ-ХХ</div>
-        <div class="error-msg" id="errorPhone"></div>
-      </div>
-
-      <button id="submitBtn" class="btn-submit" type="button">Зарегистрироваться</button>
-      <p class="privacy-text">Ваши данные будут использованы только для связи</p>
-    </form>
-  </div>
-</div>
-
-<script>
-  const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-
-  // DOM элементы
-  const mainPage = document.getElementById('mainPage');
-  const registrationModal = document.getElementById('registrationModal');
-  const mainRegisterBtn = document.getElementById('mainRegisterBtn');
-  const closeModalBtn = document.getElementById('closeModalBtn');
-  const submitBtn = document.getElementById('submitBtn');
-
-  const firstName = document.getElementById('firstName');
-  const lastName = document.getElementById('lastName');
-  const email = document.getElementById('email');
-  const phone = document.getElementById('phone');
-
-  // Валидация
-  function isValidEmail(e) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-  }
-
-  function isValidPhone(p) {
-    return /\+?\d{7,15}/.test(p.replace(/\s|[-()]/g, ""));
-  }
-
-  function clearErrors() {
-    document.getElementById('errorFirstName').classList.remove('show');
-    document.getElementById('errorLastName').classList.remove('show');
-    document.getElementById('errorEmail').classList.remove('show');
-    document.getElementById('errorPhone').classList.remove('show');
-  }
-
-  function validate() {
-    clearErrors();
-    let isValid = true;
-
-    if (!firstName.value.trim()) {
-      document.getElementById('errorFirstName').textContent = "Укажите имя";
-      document.getElementById('errorFirstName').classList.add('show');
-      isValid = false;
-    }
-
-    if (!lastName.value.trim()) {
-      document.getElementById('errorLastName').textContent = "Укажите фамилию";
-      document.getElementById('errorLastName').classList.add('show');
-      isValid = false;
-    }
-
-    if (!isValidEmail(email.value.trim())) {
-      document.getElementById('errorEmail').textContent = "Некорректный e‑mail";
-      document.getElementById('errorEmail').classList.add('show');
-      isValid = false;
-    }
-
-    if (!isValidPhone(phone.value.trim())) {
-      document.getElementById('errorPhone').textContent = "Некорректный телефон";
-      document.getElementById('errorPhone').classList.add('show');
-      isValid = false;
-    }
-
-    return isValid;
-  }
-
-  function gatherData() {
-    return {
-      firstName: firstName.value.trim(),
-      lastName: lastName.value.trim(),
-      email: email.value.trim(),
-      phone: phone.value.trim()
-    };
-  }
-
-  // Открыть модаль
-  mainRegisterBtn.addEventListener('click', () => {
-    mainPage.style.display = 'none';
-    registrationModal.classList.add('show');
-    firstName.focus();
-
-    if (tg) {
-      tg.MainButton.hide();
-    }
-  });
-
-  // Закрыть модаль
-  closeModalBtn.addEventListener('click', () => {
-    registrationModal.classList.remove('show');
-    mainPage.style.display = 'flex';
-    clearErrors();
-    firstName.value = '';
-    lastName.value = '';
-    email.value = '';
-    phone.value = '';
-
-    if (tg) {
-      tg.MainButton.hide();
-    }
-  });
-
-  // Отправить
-  submitBtn.addEventListener('click', () => {
-    if (!validate()) return;
-
-    const payload = gatherData();
-
-    if (tg) {
-      tg.sendData(JSON.stringify(payload));
-      try { tg.close(); } catch(e) {}
-    } else {
-      alert("Данные:\n" + JSON.stringify(payload, null, 2));
-    }
-  });
-
-  // Инициализация Telegram
-  if (tg) {
-    try { tg.expand(); } catch (e) {}
-  }
-
-  firstName.focus();
-</script>
-</body>
-</html>
+  .course-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow:
